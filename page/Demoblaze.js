@@ -14,6 +14,7 @@ const Page = function () {
   this.quit = function () {
     this.driver.quit();
   };
+  //Find
   //BY ID
   this.waitUntilIsPresentByID = async function (elementID, timeout) {
     return await this.driver.wait(
@@ -46,6 +47,29 @@ const Page = function () {
   };
   this.findByClassName = async function (elementClassName) {
     return await this.driver.findElement(By.className(elementClassName));
+  };
+  //BY CSS
+  this.waitUntilIsPresentByCSS = async function (elementCSS, timeout) {
+    return await this.driver.wait(
+      until.elementLocated(By.css(elementCSS)),
+      timeout
+    );
+  };
+  this.findByCSS = async function (elementCSS) {
+    return await this.driver.findElement(By.css(elementCSS));
+  };
+  //
+  this.getElement = async function (elementID) {
+    elementToGet = null;
+    try {
+      elementToGet = await this.waitUntilIsPresentByID("badID", 1000);
+    } catch (error) {
+      if (error.name === "TimeoutError") {
+        elementToGet = await this.findByID(elementID);
+        return elementToGet;
+      }
+      throw error;
+    }
   };
 };
 module.exports = Page;
