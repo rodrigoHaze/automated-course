@@ -71,5 +71,14 @@ const Page = function () {
       throw error;
     }
   };
+  this.getAlertText = async function () {
+    await page.driver.wait(until.alertIsPresent());
+
+    const alert = await page.driver.switchTo().alert();
+
+    const alertText = await alert.getText();
+
+    return alertText;
+  };
 };
 module.exports = Page;
