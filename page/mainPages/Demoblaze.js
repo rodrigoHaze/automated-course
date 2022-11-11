@@ -72,9 +72,9 @@ const Page = function () {
     }
   };
   this.getAlertText = async function () {
-    await page.driver.wait(until.alertIsPresent());
+    await this.driver.wait(until.alertIsPresent());
 
-    const alert = await page.driver.switchTo().alert();
+    const alert = await this.driver.switchTo().alert();
 
     const alertText = await alert.getText();
 
