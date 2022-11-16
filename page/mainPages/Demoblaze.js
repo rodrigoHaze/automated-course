@@ -58,6 +58,7 @@ const Page = function () {
   this.findByCSS = async function (elementCSS) {
     return await this.driver.findElement(By.css(elementCSS));
   };
+
   //
   this.getElement = async function (elementID) {
     elementToGet = null;
@@ -79,6 +80,10 @@ const Page = function () {
     const alertText = await alert.getText();
 
     return alertText;
+  };
+  this.randomNumber = function getRandomArbitrary() {
+    var num = Math.trunc(Math.random() * (100000 - 10) + 10);
+    return num;
   };
 };
 module.exports = Page;
