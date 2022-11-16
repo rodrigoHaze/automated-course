@@ -1,9 +1,9 @@
 const assert = require("assert");
-const Page = require("./page/mainPages/Demoblaze");
+const Page = require("./page/mainPages/MainPage");
 const constants = require("./page/constants/index");
 const { until } = require("selenium-webdriver");
 
-describe("SIGN UP SCREEN", function () {
+describe("LOGIN SCREEN", function () {
   this.timeout(50000);
   beforeEach(async function () {
     page = new Page();
@@ -13,16 +13,16 @@ describe("SIGN UP SCREEN", function () {
     page.quit();
   });
 
-  it("001 User is at Home page , click Sign Up and modal is displayed", async function () {
+  it("001 User is at Home page , Login  Up and modal is displayed", async function () {
     //Given
     //this is already covered with { page.visitPage("http://www.demoblaze.com/") };
 
     //When
-    const singUpModal = await page.waitUntilIsPresentByID(
-      constants.signUpDisplayModal,
+    const loginModal = await page.waitUntilIsPresentByID(
+      constants.loginModal,
       30000
     );
-    singUpModal.click();
+    loginModal.click();
     //Then
     const usernameField = await page.getElement(constants.username);
     const usernameDisplayed = await usernameField.isDisplayed();

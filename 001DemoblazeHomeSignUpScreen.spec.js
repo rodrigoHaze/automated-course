@@ -1,12 +1,13 @@
 const assert = require("assert");
-const Page = require("./page/mainPages/Demoblaze");
+const Page = require("./page/mainPages/MainPage");
 const constants = require("./page/constants/index");
-const { until } = require("selenium-webdriver");
+const SignUp = require("./page/mainPages/SignUp");
 
 describe("SIGN UP SCREEN", function () {
   this.timeout(50000);
   beforeEach(async function () {
     page = new Page();
+    signup = new SignUp(page);
     await page.visitPage("http://www.demoblaze.com/");
   });
   afterEach(async function () {
@@ -18,45 +19,40 @@ describe("SIGN UP SCREEN", function () {
     //this is already covered with { page.visitPage("http://www.demoblaze.com/") };
 
     //When
-    const singUpModal = await page.waitUntilIsPresentByID(
-      constants.signUpDisplayModal,
-      30000
-    );
-    singUpModal.click();
+    await signup.waitAndClikSignUpModalButonDisplay();
     //Then
-    const usernameField = await page.getElement(constants.username);
-    const usernameDisplayed = await usernameField.isDisplayed();
-    const passwordField = await page.findByID(constants.password);
-    const passwordDisplayed = await passwordField.isDisplayed();
+    const fields = await signup.getBooleansFromUsernameAndPasswordField();
 
-    assert(usernameDisplayed === true, "Username Field is not displayed");
-    assert(passwordDisplayed === true, "Password Field Field is not displayed");
+    assert(
+      fields.usernameFieldDisplayed === true,
+      "Username Field is not displayed"
+    );
+    assert(
+      fields.passwordFieldDisplayed === true,
+      "Password Field Field is not displayed"
+    );
   });
   it("002 User is at Home page , click Sign Up and modal is displayed , user dont fill the fields and click sign up", async function () {
     //Given
     //this is already covered with { page.visitPage("http://www.demoblaze.com/") };
 
     //When
-    const singUpModalDisplayButton = await page.waitUntilIsPresentByID(
-      constants.signUpDisplayModal,
-      30000
-    );
-    singUpModalDisplayButton.click();
+    await signup.waitAndClikSignUpModalButonDisplay();
     //Then
-    const usernameField = await page.getElement(constants.username);
-    const usernameDisplayed = await usernameField.isDisplayed();
+    const fields = await signup.getBooleansFromUsernameAndPasswordField();
 
-    const passwordField = await page.findByID(constants.password);
-    const passwordDisplayed = await passwordField.isDisplayed();
+    await signup.findAncClickSignUpButtonAtModal();
 
-    const signUpButton = await page.findByCSS(constants.signUpButtonCSS);
+    const alertText = await signup.getSignUpAlertText();
 
-    signUpButton.click();
-
-    const alertText = await page.getAlertText();
-
-    assert(usernameDisplayed === true, "Username Field is not displayed");
-    assert(passwordDisplayed === true, "Password Field Field is not displayed");
+    assert(
+      fields.usernameFieldDisplayed === true,
+      "Username Field is not displayed"
+    );
+    assert(
+      fields.passwordFieldDisplayed === true,
+      "Password Field Field is not displayed"
+    );
 
     assert(alertText === constants.errorAlertText, "Alert not displayed");
   });
@@ -65,28 +61,24 @@ describe("SIGN UP SCREEN", function () {
     //this is already covered with { page.visitPage("http://www.demoblaze.com/") };
 
     //When
-    const singUpModalDisplayButton = await page.waitUntilIsPresentByID(
-      constants.signUpDisplayModal,
-      30000
-    );
-    singUpModalDisplayButton.click();
+    await signup.waitAndClikSignUpModalButonDisplay();
     //Then
-    const usernameField = await page.getElement(constants.username);
-    const usernameDisplayed = await usernameField.isDisplayed();
+    const fields = await signup.getBooleansFromUsernameAndPasswordField();
 
-    usernameField.sendKeys(constants.existingUserName);
+    fields.usernameField.sendKeys(constants.existingUserName);
 
-    const passwordField = await page.findByID(constants.password);
-    const passwordDisplayed = await passwordField.isDisplayed();
+    await signup.findAncClickSignUpButtonAtModal();
 
-    const signUpButton = await page.findByCSS(constants.signUpButtonCSS);
+    const alertText = await signup.getSignUpAlertText();
 
-    signUpButton.click();
-
-    const alertText = await page.getAlertText();
-
-    assert(usernameDisplayed === true, "Username Field is not displayed");
-    assert(passwordDisplayed === true, "Password Field Field is not displayed");
+    assert(
+      fields.usernameFieldDisplayed === true,
+      "Username Field is not displayed"
+    );
+    assert(
+      fields.passwordFieldDisplayed === true,
+      "Password Field Field is not displayed"
+    );
 
     assert(alertText === constants.errorAlertText, "Alert not displayed");
   });
@@ -95,28 +87,24 @@ describe("SIGN UP SCREEN", function () {
     //this is already covered with { page.visitPage("http://www.demoblaze.com/") };
 
     //When
-    const singUpModalDisplayButton = await page.waitUntilIsPresentByID(
-      constants.signUpDisplayModal,
-      30000
-    );
-    singUpModalDisplayButton.click();
+    await signup.waitAndClikSignUpModalButonDisplay();
     //Then
-    const usernameField = await page.getElement(constants.username);
-    const usernameDisplayed = await usernameField.isDisplayed();
+    const fields = await signup.getBooleansFromUsernameAndPasswordField();
 
-    const passwordField = await page.findByID(constants.password);
-    const passwordDisplayed = await passwordField.isDisplayed();
+    fields.passwordField.sendKeys(constants.existingPassword);
 
-    passwordField.sendKeys(constants.existingPassword);
+    await signup.findAncClickSignUpButtonAtModal();
 
-    const signUpButton = await page.findByCSS(constants.signUpButtonCSS);
+    const alertText = await signup.getSignUpAlertText();
 
-    signUpButton.click();
-
-    const alertText = await page.getAlertText();
-
-    assert(usernameDisplayed === true, "Username Field is not displayed");
-    assert(passwordDisplayed === true, "Password Field Field is not displayed");
+    assert(
+      fields.usernameFieldDisplayed === true,
+      "Username Field is not displayed"
+    );
+    assert(
+      fields.passwordFieldDisplayed === true,
+      "Password Field Field is not displayed"
+    );
 
     assert(alertText === constants.errorAlertText, "Alert not displayed");
   });
@@ -125,30 +113,26 @@ describe("SIGN UP SCREEN", function () {
     //this is already covered with { page.visitPage("http://www.demoblaze.com/") };
 
     //When
-    const singUpModalDisplayButton = await page.waitUntilIsPresentByID(
-      constants.signUpDisplayModal,
-      30000
-    );
-    singUpModalDisplayButton.click();
+    await signup.waitAndClikSignUpModalButonDisplay();
     //Then
-    const usernameField = await page.getElement(constants.username);
-    const usernameDisplayed = await usernameField.isDisplayed();
+    const fields = await signup.getBooleansFromUsernameAndPasswordField();
 
-    usernameField.sendKeys(constants.existingUserName);
+    fields.usernameField.sendKeys(constants.existingUserName);
 
-    const passwordField = await page.findByID(constants.password);
-    const passwordDisplayed = await passwordField.isDisplayed();
+    fields.passwordField.sendKeys(constants.existingPassword);
 
-    passwordField.sendKeys(constants.existingPassword);
+    await signup.findAncClickSignUpButtonAtModal();
 
-    const signUpButton = await page.findByCSS(constants.signUpButtonCSS);
+    const alertText = await signup.getSignUpAlertText();
 
-    signUpButton.click();
-
-    const alertText = await page.getAlertText();
-
-    assert(usernameDisplayed === true, "Username Field is not displayed");
-    assert(passwordDisplayed === true, "Password Field Field is not displayed");
+    assert(
+      fields.usernameFieldDisplayed === true,
+      "Username Field is not displayed"
+    );
+    assert(
+      fields.passwordFieldDisplayed === true,
+      "Password Field Field is not displayed"
+    );
 
     assert(alertText === constants.errorAlertUserText, "Alert not displayed");
   });
@@ -157,32 +141,27 @@ describe("SIGN UP SCREEN", function () {
     //this is already covered with { page.visitPage("http://www.demoblaze.com/") };
 
     //When
-    const singUpModalDisplayButton = await page.waitUntilIsPresentByID(
-      constants.signUpDisplayModal,
-      30000
-    );
-    singUpModalDisplayButton.click();
+    await signup.waitAndClikSignUpModalButonDisplay();
     //Then
-    const usernameField = await page.getElement(constants.username);
-    const usernameDisplayed = await usernameField.isDisplayed();
+    const fields = await signup.getBooleansFromUsernameAndPasswordField();
 
     const randomN = page.randomNumber();
 
-    usernameField.sendKeys(constants.existingUserName + randomN);
+    fields.usernameField.sendKeys(constants.existingUserName + randomN);
+    fields.passwordField.sendKeys(constants.existingPassword);
 
-    const passwordField = await page.findByID(constants.password);
-    const passwordDisplayed = await passwordField.isDisplayed();
+    await signup.findAncClickSignUpButtonAtModal();
 
-    passwordField.sendKeys(constants.existingPassword);
+    const alertText = await signup.getSignUpAlertText();
 
-    const signUpButton = await page.findByCSS(constants.signUpButtonCSS);
-
-    signUpButton.click();
-
-    const alertText = await page.getAlertText();
-
-    assert(usernameDisplayed === true, "Username Field is not displayed");
-    assert(passwordDisplayed === true, "Password Field Field is not displayed");
+    assert(
+      fields.usernameFieldDisplayed === true,
+      "Username Field is not displayed"
+    );
+    assert(
+      fields.passwordFieldDisplayed === true,
+      "Password Field Field is not displayed"
+    );
 
     assert(alertText === constants.successSingUp, "Alert not displayed");
   });
@@ -191,51 +170,41 @@ describe("SIGN UP SCREEN", function () {
     //this is already covered with { page.visitPage("http://www.demoblaze.com/") };
 
     //When
-    const singUpModalDisplayButton = await page.waitUntilIsPresentByID(
-      constants.signUpDisplayModal,
-      30000
-    );
-    singUpModalDisplayButton.click();
+    await signup.waitAndClikSignUpModalButonDisplay();
     //Then
-    const usernameField = await page.getElement(constants.username);
-    const usernameDisplayed = await usernameField.isDisplayed();
-    const passwordField = await page.findByID(constants.password);
-    const passwordDisplayed = await passwordField.isDisplayed();
+    const fields = await signup.getBooleansFromUsernameAndPasswordField();
 
-    const closeButton = await page.findByCSS(constants.closeButton);
-
-    closeButton.click();
-
-    const closeButtonDisplayed = await closeButton.isDisplayed();
+    const closeButtonDisplayed = await signup.getBooleanFromCloseButton();
 
     assert(closeButtonDisplayed === false, "Buton is still visible");
-    assert(usernameDisplayed === true, "Username Field is not displayed");
-    assert(passwordDisplayed === true, "Password Field Field is not displayed");
+    assert(
+      fields.usernameFieldDisplayed === true,
+      "Username Field is not displayed"
+    );
+    assert(
+      fields.passwordFieldDisplayed === true,
+      "Password Field Field is not displayed"
+    );
   });
   it("008 User is at Home page , Sign Up  modal is displayed , user click X close", async function () {
     //Given
     //this is already covered with { page.visitPage("http://www.demoblaze.com/") };
 
     //When
-    const singUpModalDisplayButton = await page.waitUntilIsPresentByID(
-      constants.signUpDisplayModal,
-      30000
-    );
-    singUpModalDisplayButton.click();
+    await signup.waitAndClikSignUpModalButonDisplay();
     //Then
-    const usernameField = await page.getElement(constants.username);
-    const usernameDisplayed = await usernameField.isDisplayed();
-    const passwordField = await page.findByID(constants.password);
-    const passwordDisplayed = await passwordField.isDisplayed();
+    const fields = await signup.getBooleansFromUsernameAndPasswordField();
 
-    const closeButton = await page.findByClassName(constants.closeXbutton);
-
-    closeButton.click();
-
-    const closeButtonDisplayed = await closeButton.isDisplayed();
+    const closeButtonDisplayed = await signup.getBooleanFromCloseButton();
 
     assert(closeButtonDisplayed === false, "Buton is still visible");
-    assert(usernameDisplayed === true, "Username Field is not displayed");
-    assert(passwordDisplayed === true, "Password Field Field is not displayed");
+    assert(
+      fields.usernameFieldDisplayed === true,
+      "Username Field is not displayed"
+    );
+    assert(
+      fields.passwordFieldDisplayed === true,
+      "Password Field Field is not displayed"
+    );
   });
 });
