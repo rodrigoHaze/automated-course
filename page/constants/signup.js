@@ -4,7 +4,6 @@ module.exports = {
   username: "sign-username",
   password: "sign-password",
   //class or css
-  signUpButton: " btn btn-primary", //its the name of the class
   signUpButtonCSS: "#signInModal .btn-primary", //CSS selector
   closeXbutton: "close", //its the name of the class css = #signInModal span
   closeButton: ".btn.btn-secondary", //its the name of the CSS

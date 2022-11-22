@@ -1,8 +1,6 @@
 const assert = require("assert");
 const Page = require("./page/mainPages/MainPage");
-const constants = require("./page/constants/index");
-const { until } = require("selenium-webdriver");
-
+const loginSectionFunctions = require("./page/mainPages/Login");
 describe("LOGIN SCREEN", function () {
   this.timeout(50000);
   beforeEach(async function () {
@@ -13,23 +11,28 @@ describe("LOGIN SCREEN", function () {
     page.quit();
   });
 
-  it("001 User is at Home page , Login  Up and modal is displayed", async function () {
+  it("009 User is at Home page , Login  Up and modal is displayed", async function () {
     //Given
     //this is already covered with { page.visitPage("http://www.demoblaze.com/") };
 
     //When
-    const loginModal = await page.waitUntilIsPresentByID(
-      constants.loginModal,
-      30000
-    );
-    loginModal.click();
+    await loginSectionFunctions.waitAndClickToLogin(page, 3000);
     //Then
-    const usernameField = await page.getElement(constants.username);
-    const usernameDisplayed = await usernameField.isDisplayed();
-    const passwordField = await page.findByID(constants.password);
-    const passwordDisplayed = await passwordField.isDisplayed();
+    const fields = await loginSectionFunctions.getBooleanFromLoginFields(page);
 
-    assert(usernameDisplayed === true, "Username Field is not displayed");
-    assert(passwordDisplayed === true, "Password Field Field is not displayed");
+    assert(fields.user === true, "Username Field is not displayed");
+    assert(fields.pass === true, "Password Field Field is not displayed");
+  });
+  it("010 User is at Home page , Login  Up and modal is displayed and click Login", async function () {
+    //Given
+    //this is already covered with { page.visitPage("http://www.demoblaze.com/") };
+
+    //When
+    await loginSectionFunctions.waitAndClickToLogin(page, 3000);
+    //Then
+    const fields = await loginSectionFunctions.getBooleanFromLoginFields(page);
+
+    assert(fields.user === true, "Username Field is not displayed");
+    assert(fields.pass === true, "Password Field Field is not displayed");
   });
 });

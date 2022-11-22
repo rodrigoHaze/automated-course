@@ -1,6 +1,6 @@
 const assert = require("assert");
 const Page = require("./page/mainPages/MainPage");
-const constants = require("./page/constants/index");
+const signUpConstants = require("./page/constants/signup");
 const SignUp = require("./page/mainPages/SignUp");
 
 describe("SIGN UP SCREEN", function () {
@@ -54,7 +54,7 @@ describe("SIGN UP SCREEN", function () {
       "Password Field Field is not displayed"
     );
 
-    assert(alertText === constants.errorAlertText, "Alert not displayed");
+    assert(alertText === signUpConstants.errorAlertText, "Alert not displayed");
   });
   it("003 User is at Home page , click Sign Up and modal is displayed , user  fill the username field and click sign up", async function () {
     //Given
@@ -65,7 +65,7 @@ describe("SIGN UP SCREEN", function () {
     //Then
     const fields = await signup.getBooleansFromUsernameAndPasswordField();
 
-    fields.usernameField.sendKeys(constants.existingUserName);
+    fields.usernameField.sendKeys(signUpConstants.existingUserName);
 
     await signup.findAncClickSignUpButtonAtModal();
 
@@ -80,7 +80,7 @@ describe("SIGN UP SCREEN", function () {
       "Password Field Field is not displayed"
     );
 
-    assert(alertText === constants.errorAlertText, "Alert not displayed");
+    assert(alertText === signUpConstants.errorAlertText, "Alert not displayed");
   });
   it("004 User is at Home page , click Sign Up and modal is displayed , user  fill the password field and click sign up", async function () {
     //Given
@@ -91,7 +91,7 @@ describe("SIGN UP SCREEN", function () {
     //Then
     const fields = await signup.getBooleansFromUsernameAndPasswordField();
 
-    fields.passwordField.sendKeys(constants.existingPassword);
+    fields.passwordField.sendKeys(signUpConstants.existingPassword);
 
     await signup.findAncClickSignUpButtonAtModal();
 
@@ -106,7 +106,7 @@ describe("SIGN UP SCREEN", function () {
       "Password Field Field is not displayed"
     );
 
-    assert(alertText === constants.errorAlertText, "Alert not displayed");
+    assert(alertText === signUpConstants.errorAlertText, "Alert not displayed");
   });
   it("005 User is at Home page , Sign Up  modal is displayed , user  fill the both fields and click sign up, user exist", async function () {
     //Given
@@ -117,9 +117,9 @@ describe("SIGN UP SCREEN", function () {
     //Then
     const fields = await signup.getBooleansFromUsernameAndPasswordField();
 
-    fields.usernameField.sendKeys(constants.existingUserName);
+    fields.usernameField.sendKeys(signUpConstants.existingUserName);
 
-    fields.passwordField.sendKeys(constants.existingPassword);
+    fields.passwordField.sendKeys(signUpConstants.existingPassword);
 
     await signup.findAncClickSignUpButtonAtModal();
 
@@ -134,7 +134,10 @@ describe("SIGN UP SCREEN", function () {
       "Password Field Field is not displayed"
     );
 
-    assert(alertText === constants.errorAlertUserText, "Alert not displayed");
+    assert(
+      alertText === signUpConstants.errorAlertUserText,
+      "Alert not displayed"
+    );
   });
   it("006 User is at Home page , Sign Up  modal is displayed , user  fill the both fields and click sign up, user don´t exist so its created", async function () {
     //Given
@@ -147,8 +150,8 @@ describe("SIGN UP SCREEN", function () {
 
     const randomN = page.randomNumber();
 
-    fields.usernameField.sendKeys(constants.existingUserName + randomN);
-    fields.passwordField.sendKeys(constants.existingPassword);
+    fields.usernameField.sendKeys(signUpConstants.existingUserName + randomN);
+    fields.passwordField.sendKeys(signUpConstants.existingPassword);
 
     await signup.findAncClickSignUpButtonAtModal();
 
@@ -163,7 +166,7 @@ describe("SIGN UP SCREEN", function () {
       "Password Field Field is not displayed"
     );
 
-    assert(alertText === constants.successSingUp, "Alert not displayed");
+    assert(alertText === signUpConstants.successSingUp, "Alert not displayed");
   });
   it("007 User is at Home page , Sign Up  modal is displayed , user click close", async function () {
     //Given
