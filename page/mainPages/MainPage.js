@@ -22,8 +22,16 @@ const Page = function () {
       timeout
     );
   };
+
   this.findByID = async function (elementID) {
     return await this.driver.findElement(By.id(elementID));
+  };
+
+  this.findByLinkText = async function (linktext) {
+    return this.driver.findElement(By.linkText(linktext));
+  };
+  this.waitUntilIsPresentByLinkText = async function (linktext) {
+    return this.driver.wait(until.elementsLocated(By.linkText(linktext)), 3000);
   };
   //BY Name
   this.waitUntilIsPresentByName = async function (elementName, timeout) {

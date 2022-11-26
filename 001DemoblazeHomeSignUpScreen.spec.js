@@ -1,6 +1,6 @@
 const assert = require("assert");
 const Page = require("./page/mainPages/MainPage");
-const signUpConstants = require("./page/constants/signup");
+const signUpConstants = require("./page/constants");
 const SignUp = require("./page/mainPages/SignUp");
 
 describe("SIGN UP SCREEN", function () {

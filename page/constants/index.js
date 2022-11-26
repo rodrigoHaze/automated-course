@@ -13,6 +13,6 @@ module.exports = {
   successSingUp: "Sign up successful.",
   //user creation
   existingUserName: "rodrigo_exist",
-  newUserName: "rodrigo_exist1", //this should be changed every time you test
   existingPassword: "abc",
+  newUserName: "rodrigo_exist1", //this should be changed every time you test
 };
